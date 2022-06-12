@@ -15,7 +15,7 @@ export default function Modal({ open, close, catName, updateCat, index }) {
           <input value={actualizarGato} onChange={(e) => { setActualizarGato(e.target.value) }} />
           <button onClick={() => {updateCat(index, actualizarGato)}}>Update</button>
         </div>
-    </div>     
+    </div>
   );
 }
   

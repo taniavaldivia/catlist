@@ -9,7 +9,10 @@ export default function Catlist() {
   const [selectedCat, setSelectedCat] = useState("")
 
   const addCat = (catName) => {
-    setCatlist([...catlist, catName])
+    if (catName !== '' && catlist.includes(catName) === false) {
+      setCatlist([...catlist, catName])
+    }
+    setAddCatName('')
   }
 
   const deleteCat = (index) => {
@@ -28,18 +31,27 @@ export default function Catlist() {
   }
 
   const updateCat = (index, newName) => {
-    const array = [...catlist]
-    array[index] = newName
-    setCatlist(array)
+    if (newName !== '' && catlist.includes(newName) === false) {
+      const array = [...catlist]
+      array[index] = newName
+      setCatlist(array)
+    }
   }
 
   return (
     <div>
-      <input value={addCatName} onChange={(e) => { setAddCatName(e.target.value) }} />
+      <input 
+        placeholder = "Nombre de gato"
+        value={addCatName}
+        onChange={(e) => { setAddCatName(e.target.value) }} />
       <button onClick={() => { addCat(addCatName) }}>Add Cat</button>
       <button onClick={() => { setCatlist([]) }}>Borrar TODOS</button>
 
       <div id="main">
+        {catlist.length === 0 &&
+          <h3>NO HAY NADA. PON AQUÍ TUS GATITOS</h3>
+        }
+
         {catlist.map((cat, index) => {
           return <Cat key={index} index={index} name={cat} delCat={deleteCat} updCat={updateCatModal}/>
         })}
