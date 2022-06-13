@@ -27,7 +27,7 @@ export default function Catlist() {
   }
 
   const closeModal = () => {
-    setModalOpen(false)
+    if (modalOpen) setModalOpen(false)
   }
 
   const updateCat = (index, newName) => {
@@ -35,28 +35,32 @@ export default function Catlist() {
       const array = [...catlist]
       array[index] = newName
       setCatlist(array)
+      // Le agregué esto!
+      closeModal(false)
     }
   }
 
   return (
     <div>
-      <input 
-        placeholder = "Nombre de gato"
-        value={addCatName}
-        onChange={(e) => { setAddCatName(e.target.value) }} />
-      <button onClick={() => { addCat(addCatName) }}>Add Cat</button>
-      <button onClick={() => { setCatlist([]) }}>Borrar TODOS</button>
+      <div>
+        <input 
+          placeholder = "Nombre de gato"
+          value={addCatName}
+          onChange={(e) => { setAddCatName(e.target.value) }} />
+        <button onClick={() => { addCat(addCatName) }}>Add Cat</button>
+        <button onClick={() => { setCatlist([]) }}>Borrar TODOS</button>
 
-      <div id="main">
-        {catlist.length === 0 &&
-          <h3>NO HAY NADA. PON AQUÍ TUS GATITOS</h3>
-        }
+        <div id="main">
+          
+          {catlist.length === 0 &&
+            <h3>NO HAY NADA. PON AQUÍ TUS GATITOS</h3>
+          }
 
-        {catlist.map((cat, index) => {
-          return <Cat key={index} index={index} name={cat} delCat={deleteCat} updCat={updateCatModal}/>
-        })}
+          {catlist.map((cat, index) => {
+            return <Cat key={index} index={index} name={cat} delCat={deleteCat} updCat={updateCatModal}/>
+          })}
+        </div>
       </div>
-
       <Modal open={modalOpen} close={closeModal} catName={catlist[selectedCat]} updateCat={updateCat} index={selectedCat} />
     </div>
   );
