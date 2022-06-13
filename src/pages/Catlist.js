@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cat from "../components/Cat"
 import Modal from "../components/Modal"
 
@@ -7,6 +7,10 @@ export default function Catlist() {
   const [addCatName, setAddCatName] = useState("")
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedCat, setSelectedCat] = useState("")
+
+  useEffect(() => {
+    console.log("Watcher inicial de la catlist")
+  }, [catlist]);
 
   const addCat = (catName) => {
     if (catName !== '' && catlist.includes(catName) === false) {
@@ -27,7 +31,7 @@ export default function Catlist() {
   }
 
   const closeModal = () => {
-    if (modalOpen) setModalOpen(false)
+    setModalOpen(false)
   }
 
   const updateCat = (index, newName) => {
@@ -35,8 +39,7 @@ export default function Catlist() {
       const array = [...catlist]
       array[index] = newName
       setCatlist(array)
-      // Le agregué esto!
-      closeModal(false)
+      closeModal()
     }
   }
 
